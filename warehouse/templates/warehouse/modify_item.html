@@ -1,0 +1,12 @@
+{% extends "warehouse/base.html" %}
+
+{% block content %}
+
+<div class="table">
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+</div>
+{% endblock content %}

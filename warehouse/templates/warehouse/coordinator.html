@@ -1,0 +1,182 @@
+{% extends "warehouse/base.html" %}
+
+{% block content %}
+
+{% if messages %}
+    {% for message in messages %}
+        <div>
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<nav>
+    <a class="button" href="/">Back to employee view</a> <a class="button" href="/admin">Administrator</a>
+</nav>
+
+
+
+<div class="table">
+<h2>Items</h2>
+    <a href="/add_item"><button type="button">Add item</button></a> <a href="{% url 'coordinator' %}"><button type="button">Clear Filter</button></a>
+
+{% if items %}
+<table>
+    <thead>
+        <tr>
+            <th><a href="?sort_by=item_id">ID</a></th>
+            <th><a href="?sort_by=item_name">Name</a></th>
+            <th><a href="?sort_by=item_group">Group</a></th>
+            <th><a href="?sort_by=unit_of_measurement">Unit</a></th>
+            <th><a href="?sort_by=quantity">Quantity</a></th>
+            <th><a href="?sort_by=price_without_vat">Price without VAT</a></th>
+            <th><a href="?sort_by=status">Status</a></th>
+            <th><a href="?sort_by=storage_location">Storage location</a></th>
+            <th><a href="?sort_by=contact_person">Contact person</a></th>
+            <th>Photo</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+            <tr>
+                <td>{{ item.item_id }}</td>
+                <td>{{ item.item_name }}</td>
+                <td>{{ item.item_group }}</td>
+                <td>{{ item.unit_of_measurement }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.price_without_vat }}</td>
+                <td>{{ item.status }}</td>
+                <td>{{ item.storage_location }}</td>
+                <td>{{ item.contact_person }}</td>
+                <td>{{ item.photo }}</td>
+                <td>
+                    <form method="POST" action="{% url 'delete_item' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="item_id" value="{{ item.item_id }}">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="GET" action="{% url 'modify_item' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="item_id" value="{{ item.item_id }}">
+                        <button type="submit">Modify</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+    <form method="GET">
+        {% if filter_form.is_bound %}
+            {{ filter_form }}
+            <button type="submit" name="filter">Filter</button>
+            <a href="{% url 'coordinator' %}"><button type="button">Clear Filter</button></a>
+        {% else %}
+            <button type="submit" name="filter">Filter Items</button>
+        {% endif %}
+    </form>
+
+
+    <form method="GET">
+    {% if search_form.is_bound %}
+        {{ search_form }}
+        <button type="submit" name="search_name">Search</button>
+        <a href="{% url 'coordinator' %}"><button type="button">Clear Search</button></a>
+    {% else %}
+        <button type="submit" name="search_name">Search Item's name</button>
+    {% endif %}
+    </form>
+
+{% else %}
+    <h5>No items</h5>
+{% endif %}
+</div>
+
+<div class="table">
+<h2>Placed orders</h2>
+
+   <a href="{% url 'coordinator' %}"><button type="button">Clear Filter</button></a>
+
+{% if orders %}
+    <table>
+        <thead>
+            <tr>
+                <th><a href="?sort_request_by=request_id">ID</a></th>
+                <th><a href="?sort_request_by=employee_name">Employee</a></th>
+                <th><a href="?sort_request_by=comment">Comment</a></th>
+                <th><a href="?sort_request_by=status">Status</a></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+                <tr>
+                    <td>{{ order.request_id }}</td>
+                    <td>{{ order.employee_name }}</td>
+                    <td>{{ order.comment }}</td>
+                    <td>{{ order.order_status }}</td>
+                    <td>
+                        <form method="GET" action="{% url 'open_order' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="request_id" value="{{ order.request_id }}">
+                            <button type="submit">Details</button>
+                        </form>
+                    </td>
+                    {% if order.order_status == "New" %}
+                        <td>
+                            <form method="GET" action="{% url 'decline_request' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="request_id" value="{{ order.request_id }}">
+                                <button type="submit">Decline</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form method="POST" action="{% url 'accept_request' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="request_id" value="{{ order.request_id }}">
+                                <button type="submit">Accept</button>
+                            </form>
+                        </td>
+                    {% endif %}
+                    <td>
+                        <form method="POST" action="{% url 'delete_order' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="request_id" value="{{ order.request_id }}">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <form method="GET">
+    {% if filter_order_form.is_bound %}
+        {{ filter_order_form }}
+        <button type="submit" name="filter_order">Filter</button>
+        <a href="{% url 'coordinator' %}"><button type="button">Clear Filter</button></a>
+    {% else %}
+        <button type="submit" name="filter_order">Filter Orders</button>
+    {% endif %}
+    </form>
+
+    <form method="GET">
+    {% if search_orders_form.is_bound %}
+        {{ search_orders_form }}
+        <button type="submit" name="search_orders_id">Search</button>
+        <a href="{% url 'coordinator' %}"><button type="button">Clear Search</button></a>
+    {% else %}
+        <button type="submit" name="search_orders_id">Search Order's ID</button>
+    {% endif %}
+    </form>
+
+
+
+{% else %}
+    <h5>No orders</h5>
+{% endif %}
+
+</div>
+
+{% endblock content %}

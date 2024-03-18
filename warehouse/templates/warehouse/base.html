@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'warehouse/main.css' %}">
+
+    {% if title  %}
+        <title>TMA Warehouse - {{ title }}</title>
+    {% else %}
+        <title>TMA Warehouse</title>
+    {% endif %}
+
+</head>
+
+<header>
+    <h1>Warehouse</h1>
+</header>
+
+
+
+<body>
+
+{% block content %}{% endblock %}
+
+</body>
+
+</html>

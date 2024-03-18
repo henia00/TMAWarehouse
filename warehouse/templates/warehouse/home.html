@@ -1,0 +1,90 @@
+{% extends "warehouse/base.html" %}
+
+{% block content %}
+
+
+
+{% if messages %}
+    {% for message in messages %}
+        <div>
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+
+
+<nav>
+    <a class="button" href="/login">Coordinator</a> <a class="button" href="/admin">Administrator</a>
+</nav>
+
+
+
+<section class="table">
+<h2>Items</h2>
+<a class="button" href="/add_order">Place order</a>
+<a class="button" href="/add_to_last_order">Add to last order</a>
+
+{% if items %}
+<table>
+    <thead>
+        <tr>
+            <th><a href="?sort_by=item_id">ID</a></th>
+            <th><a href="?sort_by=item_name">Name</a></th>
+            <th><a href="?sort_by=item_group">Group</a></th>
+            <th><a href="?sort_by=unit_of_measurement">Unit</a></th>
+            <th><a href="?sort_by=quantity">Quantity</a></th>
+            <th><a href="?sort_by=price_without_vat">Price without VAT</a></th>
+            <th><a href="?sort_by=status">Status</a></th>
+            <th><a href="?sort_by=storage_location">Storage location</a></th>
+            <th><a href="?sort_by=contact_person">Contact person</a></th>
+            <th>Photo</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+            <tr>
+                <td>{{ item.item_id }}</td>
+                <td>{{ item.item_name }}</td>
+                <td>{{ item.item_group }}</td>
+                <td>{{ item.unit_of_measurement }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.price_without_vat }}</td>
+                <td>{{ item.status }}</td>
+                <td>{{ item.storage_location }}</td>
+                <td>{{ item.contact_person }}</td>
+                <td>{{ item.photo }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+    <form method="GET">
+    {% if filter_form.is_bound %}
+        {{ filter_form }}
+        <button type="submit" name="filter">Filter</button>
+        <a href="{% url 'home' %}"><button type="button">Clear Filter</button></a>
+    {% else %}
+        <button type="submit" name="filter">Filter Items</button>
+    {% endif %}
+    </form>
+
+    <form method="GET">
+    {% if search_form.is_bound %}
+        {{ search_form }}
+        <button type="submit" name="search_id">Search</button>
+        <a href="{% url 'home' %}"><button type="button">Clear Search</button></a>
+    {% else %}
+        <button type="submit" name="search_id">Search Item'd ID</button>
+    {% endif %}
+    </form>
+
+</section>
+
+
+
+
+{% else %}
+    <h5>No items</h5>
+{% endif %}
+{% endblock content %}

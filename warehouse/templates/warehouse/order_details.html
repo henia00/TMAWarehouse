@@ -1,0 +1,32 @@
+{% extends "warehouse/base.html" %}
+
+{% block content %}
+
+<section class="table">
+<h2>Order details</h2>
+<a class="button" href="{% url 'coordinator' %}">Go back</a>
+
+{% if ordered_items %}
+<table>
+    <thead>
+        <tr>
+            <th><a href="?sort_by=item_name">Name</a></th>
+            <th><a href="?sort_by=unit_of_measurement">Unit</a></th>
+            <th><a href="?sort_by=quantity">Quantity</a></th>
+            <th><a href="?sort_by=price_without_vat">Price without VAT</a></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in ordered_items %}
+            <tr>
+                <td>{{ item.item_name }}</td>
+                <td>{{ item.unit }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.price_without_vat }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+{% endblock content %}

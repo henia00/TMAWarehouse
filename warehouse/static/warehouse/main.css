@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
+
+body {
+    background-color: white;
+    font-family: sans-serif;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.table, .header {
+    background-color: white;
+    border: solid 2px #bcb8b1;
+    border-radius: 0.5em;
+    padding: 0.5em;
+    margin: 1em;
+    box-shadow: 10px 5px 5px #8a817c;
+}
+
+.table {
+    height = 20px;
+    overflow-y: scroll;
+}
+
+nav {
+    background-color: white;
+    padding: 0.5em;
+    margin: 1em;
+    text-align: right;
+}
+
+table{
+    margin: 2em;
+}
+
+h1 {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
+    text-align: center;
+}
+
+button, .button {
+    color: black;
+    padding: 0.2em;
+    text-decoration: none;
+    border: solid 2px #bcb8b1;
+    border-radius: 0.5em;
+    padding: 0.5em;
+    background-color: #f8edeb;
+}
+
+button:hover, .button:hover {
+    color: black;
+    padding: 0.2em;
+    text-decoration: none;
+    border: solid 2px #bcb8b1;
+    border-radius: 0.5em;
+    padding: 0.5em;
+    background-color: #f4f3ee;
+    box-shadow: 10px 5px 5px #bcb8b1;
+}
+
+button:active, .button:active {
+    color: black;
+    padding: 0.2em;
+    text-decoration: none;
+    border: solid 2px #bcb8b1;
+    border-radius: 0.5em;
+    padding: 0.5em;
+    background-color: #f8edeb;
+}
+
+th a, th {
+    color: #2f3e46;
+    text-decoration: none;
+    background-color: #84a98c;
+}
+
+th a:hover{
+    color: #cad2c5;
+}
+
+tbody tr {
+    background-color: #cad2c5;
+}
+
+h4 {
+   color: #2f3e46;
+}
+
+h5 {
+   color: #84a98c;
+}
