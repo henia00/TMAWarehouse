@@ -145,7 +145,7 @@ def delete_item(request):
 
 
 def delete_order(request):
-    """ Deleting item from items (access from coordinator page) """
+    """ Deleting order from orders (access from coordinator page) """
     id_to_delete = request.POST.get('request_id')
     Order.objects.filter(request_id = id_to_delete).delete()
     return redirect('coordinator')
@@ -162,9 +162,7 @@ def add_order(request):
                 comment=form.cleaned_data['comment'],
                 order_status='New'
             )
-
             item = Items.objects.get(item_name=form.cleaned_data['item_name'])
-
             order_item = OrderItem.objects.create(
                 order=order,
                 item_name=form.cleaned_data['item_name'],
@@ -180,7 +178,7 @@ def add_order(request):
                   context=context)
 
 def add_to_last_order(request):
-    """ Adding to last order (access from employee page) """
+    """ Adding to the last order (access from employee page) """
     last_order = sorted(Order.objects.all(),
                         key=lambda order: order.request_id,
                         reverse=True)[0]
@@ -254,6 +252,7 @@ def accept_request(request):
 
 
 def open_order(request):
+    """ Opening detailed view of items inside the order """
     requested_id = request.GET.get('request_id')
     requested_object = Order.objects.get(request_id = requested_id)
     ordered_items = OrderItem.objects.filter(order = requested_object)

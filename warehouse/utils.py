@@ -1,4 +1,5 @@
 def filter_items(items, filter_form):
+    """ Filters items based on the filter form provided by the user """
     if filter_form.cleaned_data['item_group']:
         items = items.filter(item_group=filter_form.
                              cleaned_data['item_group'])
@@ -21,6 +22,7 @@ def filter_items(items, filter_form):
 
 
 def filter_orders(orders, filter_form):
+    """ Filters orders based on the filter form provided by the user """
     if filter_form.cleaned_data['employee_name']:
         orders = orders.filter(employee_name=filter_form.
                                cleaned_data['employee_name'])
@@ -31,11 +33,13 @@ def filter_orders(orders, filter_form):
 
 
 def search_items(items, search_form):
+    """ Returns search results on the items """
     items = items.filter(item_name=search_form.cleaned_data['name_to_search'])
     return items
 
 
 def search_orders(orders, search_orders_form):
+    """ Returns search results on the orders """
     orders = orders.filter(request_id=search_orders_form.
                            cleaned_data['id_to_search'])
     return orders

@@ -23,6 +23,7 @@ ORDER_STATUS_CHOICE = (
 )
 
 class ItemsForm(ModelForm):
+    """ Form based on the model Item. """
     class Meta:
         model = Items
         fields = ['item_name', 'item_group', 'unit_of_measurement',
@@ -31,6 +32,7 @@ class ItemsForm(ModelForm):
 
 
 class OrderForm(forms.Form):
+    """ Form to create a new order. """
     employee_name = forms.CharField(max_length=100)
     item_name = forms.ModelChoiceField(queryset=Items.objects.all(), empty_label=None)
     unit = forms.ChoiceField(choices=UNITS_OF_MEASUREMENT)
@@ -40,6 +42,7 @@ class OrderForm(forms.Form):
 
 
 class AddToOrderForm(forms.Form):
+    """ Form to add new request to the existing order. """
     item_name = forms.ModelChoiceField(queryset=Items.objects.all(), empty_label=None)
     unit = forms.ChoiceField(choices=UNITS_OF_MEASUREMENT)
     quantity = forms.IntegerField()
@@ -47,10 +50,12 @@ class AddToOrderForm(forms.Form):
 
 
 class DeclinedForm(forms.Form):
+    """ Form to get comment in the case of declining the order. """
     comment = forms.CharField(widget=forms.Textarea(attrs={"rows": "5"}))
 
 
 class ItemFilterForm(forms.Form):
+    """ Form to filter items """
     item_group = forms.ChoiceField(choices=ITEM_GROUPS, required=False)
     unit_of_measurement = forms.ChoiceField(choices=UNITS_OF_MEASUREMENT,
                                             required=False)
@@ -63,6 +68,7 @@ class ItemFilterForm(forms.Form):
 
 
 class OrderFilterForm(forms.Form):
+    """ Form to filter orders """
     employee_name = forms.CharField(max_length=100, required=False)
     order_status = forms.ChoiceField(choices = ORDER_STATUS_CHOICE,
                                      required=False)
